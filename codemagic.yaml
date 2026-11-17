@@ -1,0 +1,20 @@
+workflows:
+  android-apk:
+    name: Dhikr APK
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+    scripts:
+      - name: تجهيز المشروع
+        script: |
+          flutter create . --org com.swalaf --project-name dhikr --platforms android,ios
+          rm -f test/widget_test.dart
+          flutter pub get
+          dart run tool/setup.dart
+          dart run flutter_launcher_icons
+          dart run flutter_native_splash:create
+      - name: بناء APK
+        script: flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
