@@ -6,15 +6,20 @@ workflows:
     environment:
       flutter: stable
     scripts:
-      - name: تجهيز المشروع
+      - name: 1 create
         script: |
           flutter create . --org com.swalaf --project-name dhikr --platforms android,ios
           rm -f test/widget_test.dart
-          flutter pub get
-          dart run tool/setup.dart
-          dart run flutter_launcher_icons
-          dart run flutter_native_splash:create
-      - name: بناء APK
+      - name: 2 pub get
+        script: flutter pub get
+      - name: 3 setup
+        script: dart run tool/setup.dart
+      - name: 4 icons
+        script: dart run flutter_launcher_icons
+      - name: 5 splash
+        script: dart run flutter_native_splash:create
+      - name: 6 build apk
         script: flutter build apk --release
     artifacts:
       - build/app/outputs/flutter-apk/*.apk
+
